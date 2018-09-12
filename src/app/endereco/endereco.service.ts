@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http'
   providedIn: 'root'
 })
 export class EnderecoService {
-
   private url = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados';
 
   constructor(private http: HttpClient) { }
@@ -15,7 +14,6 @@ export class EnderecoService {
   }
 
   cities(uf) {
-    return this.http.get<Array<any>>('https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + uf +'/municipios');
+    return this.http.get<Array<any>>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`);
   }
-
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { ProfissoesService } from '../profissoes.service';
+import { ProfissoesService } from './profissoes.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,36 +10,42 @@ import { Router } from '@angular/router';
 })
 
 export class ProfissoesComponent implements OnInit {
-  private id:number;
-
+  private id: number;
+  private hasSuc: any;
+  private loading: boolean = false;
   displayedColumns = ['nome', 'id'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private service:ProfissoesService, private router:Router) {
+  constructor(private service:ProfissoesService, private router:Router) {}
 
+  ngOnInit() {
+    this.getAll();
   }
 
   private getAll() {
-    let list = this.service.all().subscribe(suc=>{
+    this.loading = true;
+    this.service.all().subscribe(suc => {
+      this.loading = false;
+      this.hasSuc = suc;
       this.dataSource = new MatTableDataSource<any>(suc);
       this.dataSource.paginator = this.paginator;
+    }, err => {
+      this.loading = false;
     });
   }
 
   delete(id){
-    return this.service.delete(id).subscribe(suc=> {
+    this.loading = true;
+    return this.service.delete(id).subscribe(() => {
+      this.loading = false;
       this.getAll();
     });
   }
 
   edit(id:number) {
     this.router.navigate(['/editar-profissao', id]);
-  }
-
-  ngOnInit() {
-    this.getAll();
   }
 
   applyFilter(filterValue: string) {

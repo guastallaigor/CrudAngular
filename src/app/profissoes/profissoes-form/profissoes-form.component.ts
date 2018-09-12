@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ProfissoesService } from '../../profissoes.service';
+import { ProfissoesService } from '../profissoes.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,37 +25,37 @@ export class ProfissoesFormComponent implements OnInit {
 
   createForm() {
     this.myForm = this.fb.group({
-      id: "",
-      nome: ['', Validators.required ],
+      id: '',
+      nome: ['', Validators.required],
     });
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params=>{
+    this.activatedRoute.params.subscribe(params => {
       this.id = params.id;
     });
+
     if (this.id) {
-      this.profissoesService.getById(this.id).subscribe(response=>{
-        this.myForm.setValue(response);
+      this.profissoesService.getById(this.id).subscribe(suc => {
+        this.myForm.setValue(suc);
       });
     }
   }
 
   save() {
-    if (this.myForm.valid) {
-      if(this.id) {
-        this.profissoesService.edit(this.myForm.value).subscribe(
-          response => {
-            this.router.navigate(['/profissoes']);
-          });
-      } else {
-        this.profissoesService.add(this.myForm.value).subscribe(
-          suc=>{
-            this.myForm.reset();
-            this.router.navigate(['/profissoes']);
-          }
-        );
-      }
+    if (!this.myForm.valid) return;
+
+    if (this.id) {
+      this.profissoesService.edit(this.myForm.value).subscribe(() => {
+        this.router.navigate(['/profissoes']);
+      });
+
+      return;
     }
+
+    this.profissoesService.add(this.myForm.value).subscribe(() => {
+      this.myForm.reset();
+      this.router.navigate(['/profissoes']);
+    });
   }
 };

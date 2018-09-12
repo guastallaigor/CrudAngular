@@ -10,3 +10,28 @@
 table {
   width: 100%;
 }
+
+.fab-add {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.first {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label-title {
+  font-weight: 550;
+  font-size: 1.4rem;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

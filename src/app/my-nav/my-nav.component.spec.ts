@@ -1,4 +1,3 @@
-
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MyNavComponent } from './my-nav.component';

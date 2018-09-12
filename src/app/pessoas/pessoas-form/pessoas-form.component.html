@@ -92,7 +92,7 @@
         [rowspan]="1"
       >
       <mat-form-field>
-        <mat-select placeholder="Cidade" formControlName="cidade">
+        <mat-select placeholder="Cidade" formControlName="cidade" [attr.disabled]="myForm.estado">
           <mat-option *ngFor="let cidade of cidades" [value]="cidade.id">{{ cidade.nome }}</mat-option>
         </mat-select>
         <mat-error *ngIf="myForm.controls['profissao'].hasError('required')">
@@ -101,8 +101,8 @@
      </mat-form-field>
     </mat-grid-tile>
     </mat-grid-list>
-    <div class="space-between">
-      <button type="button" color="warn" mat-raised-button routerLink="/pessoas">
+    <div class="btns">
+      <button class="cancel" type="button" color="warn" mat-raised-button routerLink="/pessoas">
         Cancelar
       </button>
       <button type="submit" color="primary" mat-raised-button>

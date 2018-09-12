@@ -9,12 +9,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./my-nav.component.css']
 })
 export class MyNavComponent {
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(result => result.matches));
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
-    
   constructor(private breakpointObserver: BreakpointObserver) {}
-  
-  }
+}
