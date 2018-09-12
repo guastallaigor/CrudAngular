@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProfissoesService extends Core {
-  constructor(anotherHttp:HttpClient) {
+  constructor(anotherHttp: HttpClient) {
     super(anotherHttp, 'api/profissoes');
   }
 }

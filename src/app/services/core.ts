@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 export class Core {
   url: string;
 
-  constructor(private http:HttpClient, url:string) {
+  constructor(private http: HttpClient, url: string) {
     this.url = url;
   }
 
@@ -15,7 +15,7 @@ export class Core {
     return this.http.get<any>(`${this.url}/${id}`);
   }
 
-  add(obj){
+  add(obj) {
     return this.http.post(this.url, obj);
   }
 
@@ -23,7 +23,7 @@ export class Core {
     return this.http.put(`${this.url}/${obj.id}`, obj);
   }
 
-  delete(id:number) {
+  delete(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
 }

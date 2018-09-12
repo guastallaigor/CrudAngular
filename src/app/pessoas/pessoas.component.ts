@@ -4,16 +4,31 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { PessoasService } from './pessoas.service';
 import { Router } from '@angular/router';
 
+export interface PeriodicElement {
+  nome: string;
+  sobrenome: string;
+  email: string;
+  sexo: string;
+  formacao: string;
+  profissao: string;
+  estado: string;
+  cidade: string;
+  id: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {nome: '', sobrenome: '', email: '', sexo: '',  profissao: '', formacao: '', estado: '', cidade: '', id: ''},
+];
+
 @Component({
   selector: 'app-pessoas',
   templateUrl: './pessoas.component.html',
   styleUrls: ['./pessoas.component.css']
 })
-
 export class PessoasComponent implements OnInit, OnDestroy {
   private id: number;
   private hasSuc: any;
-  private loading: boolean = false;
+  private loading = false;
   private subscribePerson: Subscription;
 
   displayedColumns = ['nome', 'sobrenome', 'email', 'profissao', 'formacao', 'id'];
@@ -21,7 +36,7 @@ export class PessoasComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private service:PessoasService, private router:Router) {}
+  constructor(private service: PessoasService, private router: Router) {}
 
   private getAll() {
     this.loading = true;
@@ -40,16 +55,18 @@ export class PessoasComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscribePerson.unsubscribe();
+    if (this.subscribePerson) {
+      this.subscribePerson.unsubscribe();
+    }
   }
 
-  delete(id){
+  delete(id) {
     this.subscribePerson = this.service.delete(id).subscribe(() => {
       this.getAll();
     });
   }
 
-  edit(id:number) {
+  edit(id: number) {
     this.router.navigate(['/editar-pessoa', id]);
   }
 
@@ -59,19 +76,3 @@ export class PessoasComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue;
   }
 }
-
-export interface PeriodicElement {
-  nome: string;
-  sobrenome: string;
-  email: string;
-  sexo: string;
-  formacao: string;
-  profissao: string;
-  estado: string;
-  cidade: string;
-  id: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {nome: '', sobrenome: '', email: '', sexo: '',  profissao: '', formacao: '', estado: '', cidade: '', id: ''},
-];

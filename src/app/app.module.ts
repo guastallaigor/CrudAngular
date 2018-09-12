@@ -6,7 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyNavComponent } from './my-nav/my-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatOptionModule, MatSelectModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule,
+  MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule,
+  MatCardModule, MatOptionModule, MatSelectModule, MatMenuModule, MatTableModule,
+  MatPaginatorModule, MatSortModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material';
@@ -17,8 +20,8 @@ import { PessoasFormComponent } from './pessoas/pessoas-form/pessoas-form.compon
 import { ProfissoesComponent } from './profissoes/profissoes.component';
 import { ProfissoesFormComponent } from './profissoes/profissoes-form/profissoes-form.component';
 
-import { PessoasService } from './pessoas/pessoas.service'
-import { ProfissoesService } from './profissoes/profissoes.service'
+import { PessoasService } from './pessoas/pessoas.service';
+import { ProfissoesService } from './profissoes/profissoes.service';
 import { EnderecoService } from './endereco/endereco.service';
 
 import { AppRoutingModule } from './app.routing.module';

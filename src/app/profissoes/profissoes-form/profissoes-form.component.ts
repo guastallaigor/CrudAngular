@@ -11,14 +11,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./profissoes-form.component.css']
 })
 export class ProfissoesFormComponent implements OnInit, OnDestroy {
-  private id:number;
+  private id: number;
   private subscribeParams: Subscription;
   private subscribeJobs: Subscription;
 
   myForm: FormGroup;
 
   constructor(
-    private fb:FormBuilder,
+    private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private profissoesService: ProfissoesService,
     private router: Router
@@ -39,8 +39,17 @@ export class ProfissoesFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscribeParams.unsubscribe();
-    this.subscribeJobs.unsubscribe();
+    this.checkIfExistsToUnsub();
+  }
+
+  checkIfExistsToUnsub() {
+    if (this.subscribeParams) {
+      this.subscribeParams.unsubscribe();
+    }
+
+    if (this.subscribeJobs) {
+      this.subscribeJobs.unsubscribe();
+    }
   }
 
   createForm() {
@@ -51,7 +60,9 @@ export class ProfissoesFormComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    if (!this.myForm.valid) return;
+    if (!this.myForm.valid) {
+      return;
+    }
 
     if (this.id) {
       this.subscribeJobs = this.profissoesService.edit(this.myForm.value).subscribe(() => {
@@ -66,4 +77,4 @@ export class ProfissoesFormComponent implements OnInit, OnDestroy {
       this.router.navigate(['/profissoes']);
     });
   }
-};
+}

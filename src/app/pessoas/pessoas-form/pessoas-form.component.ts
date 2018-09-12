@@ -58,11 +58,29 @@ export class PessoasFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscribeParams.unsubscribe();
-    this.subscribePerson.unsubscribe();
-    this.subscribeJobs.unsubscribe();
-    this.subscribeState.unsubscribe();
-    this.subscribeAddress.unsubscribe();
+    this.checkIfExistsToUnsub();
+  }
+
+  checkIfExistsToUnsub() {
+    if (this.subscribeParams) {
+      this.subscribeParams.unsubscribe();
+    }
+
+    if (this.subscribePerson) {
+      this.subscribePerson.unsubscribe();
+    }
+
+    if (this.subscribeJobs) {
+      this.subscribeJobs.unsubscribe();
+    }
+
+    if (this.subscribeState) {
+      this.subscribeState.unsubscribe();
+    }
+
+    if (this.subscribeAddress) {
+      this.subscribeAddress.unsubscribe();
+    }
   }
 
   createForm() {
@@ -95,7 +113,9 @@ export class PessoasFormComponent implements OnInit, OnDestroy {
   }
 
   saveUser() {
-    if (!this.myForm.valid) return;
+    if (!this.myForm.valid) {
+      return;
+    }
 
     this.myForm.value.estado = this.myForm.value.estado.nome;
     this.myForm.value.cidade = this.myForm.value.cidade.nome;

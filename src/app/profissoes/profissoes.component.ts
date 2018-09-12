@@ -4,30 +4,39 @@ import { ProfissoesService } from './profissoes.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+export interface PeriodicElement {
+  nome: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { nome: '' },
+];
+
 @Component({
   selector: 'app-profissoes',
   templateUrl: './profissoes.component.html',
   styleUrls: ['./profissoes.component.css']
 })
-
 export class ProfissoesComponent implements OnInit, OnDestroy {
   private id: number;
   private hasSuc: any;
-  private loading: boolean = false;
+  private loading = false;
   private subscribeJobs: Subscription;
   displayedColumns = ['nome', 'id'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private service:ProfissoesService, private router:Router) {}
+  constructor(private service: ProfissoesService, private router: Router) {}
 
   ngOnInit() {
     this.getAll();
   }
 
   ngOnDestroy() {
-    this.subscribeJobs.unsubscribe();
+    if (this.subscribeJobs) {
+      this.subscribeJobs.unsubscribe();
+    }
   }
 
   private getAll() {
@@ -42,7 +51,7 @@ export class ProfissoesComponent implements OnInit, OnDestroy {
     });
   }
 
-  delete(id){
+  delete(id) {
     this.loading = true;
     this.subscribeJobs = this.service.delete(id).subscribe(() => {
       this.loading = false;
@@ -50,7 +59,7 @@ export class ProfissoesComponent implements OnInit, OnDestroy {
     });
   }
 
-  edit(id:number) {
+  edit(id: number) {
     this.router.navigate(['/editar-profissao', id]);
   }
 
@@ -60,11 +69,3 @@ export class ProfissoesComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue;
   }
 }
-
-export interface PeriodicElement {
-  nome: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {nome: ''},
-];
