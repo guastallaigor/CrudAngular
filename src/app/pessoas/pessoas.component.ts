@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { PessoasService } from './pessoas.service';
 import { Router } from '@angular/router';
@@ -9,10 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./pessoas.component.css']
 })
 
-export class PessoasComponent implements OnInit {
+export class PessoasComponent implements OnInit, OnDestroy {
   private id: number;
   private hasSuc: any;
   private loading: boolean = false;
+  private subscribePerson: Subscription;
+
   displayedColumns = ['nome', 'sobrenome', 'email', 'profissao', 'formacao', 'id'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
@@ -22,7 +25,7 @@ export class PessoasComponent implements OnInit {
 
   private getAll() {
     this.loading = true;
-    this.service.all().subscribe(suc => {
+    this.subscribePerson = this.service.all().subscribe(suc => {
       this.hasSuc = suc;
       this.loading = false;
       this.dataSource = new MatTableDataSource<any>(suc);
@@ -36,8 +39,12 @@ export class PessoasComponent implements OnInit {
     this.getAll();
   }
 
+  ngOnDestroy() {
+    this.subscribePerson.unsubscribe();
+  }
+
   delete(id){
-    return this.service.delete(id).subscribe(() => {
+    this.subscribePerson = this.service.delete(id).subscribe(() => {
       this.getAll();
     });
   }

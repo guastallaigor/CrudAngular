@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ProfissoesService } from './profissoes.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profissoes',
@@ -9,10 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./profissoes.component.css']
 })
 
-export class ProfissoesComponent implements OnInit {
+export class ProfissoesComponent implements OnInit, OnDestroy {
   private id: number;
   private hasSuc: any;
   private loading: boolean = false;
+  private subscribeJobs: Subscription;
   displayedColumns = ['nome', 'id'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
@@ -24,9 +26,13 @@ export class ProfissoesComponent implements OnInit {
     this.getAll();
   }
 
+  ngOnDestroy() {
+    this.subscribeJobs.unsubscribe();
+  }
+
   private getAll() {
     this.loading = true;
-    this.service.all().subscribe(suc => {
+    this.subscribeJobs = this.service.all().subscribe(suc => {
       this.loading = false;
       this.hasSuc = suc;
       this.dataSource = new MatTableDataSource<any>(suc);
@@ -38,7 +44,7 @@ export class ProfissoesComponent implements OnInit {
 
   delete(id){
     this.loading = true;
-    return this.service.delete(id).subscribe(() => {
+    this.subscribeJobs = this.service.delete(id).subscribe(() => {
       this.loading = false;
       this.getAll();
     });

@@ -3,9 +3,9 @@
     <label class="label-title">Pessoas</label>
 
     <div class="fab-add">
-      <a mat-fab color="primary" routerLink="/criar-pessoa">
+      <button mat-fab [matTooltipPosition]="'left'" matTooltip="Nova pessoa" color="primary" routerLink="/criar-pessoa">
         <mat-icon aria-label="Adicionar">add</mat-icon>
-      </a>
+      </button>
     </div>
   </div>
   <mat-form-field>
